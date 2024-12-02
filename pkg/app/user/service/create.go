@@ -1,15 +1,27 @@
 package service
 
 import (
-	"Project/pkg/app/user/model"
+	"Project/internal/encryption"
+	"Project/pkg/app/user/domain"
+
 	"time"
 )
 
+func (s UserService) CreateUserService(u domain.CreateUserModel) (err error) {
 
-func (s UserService) CreateUserService(u model.CreateUserModel) (succes bool, err error){
+	if u.Password != u.PasswordVerified {
+		return domain.DiferentPasswordError
+	}
+	password_encrypted, err := encryption.Encrypt([]byte(u.Password))
+
+	if err != nil {
+		return err
+	}
+
+	u.Password = password_encrypted
 	u.CreatedAt = time.Now().UTC()
 
-	succes, err = s.Storage.Create(u) 
+	err = s.UserStorage.Create(u)
 
-	return succes, err
+	return err
 }

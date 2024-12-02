@@ -1,0 +1,20 @@
+FROM golang:1.22.3-bookworm
+
+RUN apt-get update
+
+RUN apt-get update && apt-get install -y net-tools
+WORKDIR /app
+
+COPY ./go.mod /app/go.mod
+COPY ./go.sum /app/go.sum
+
+RUN go install github.com/go-delve/delve/cmd/dlv@v1.23.0 \
+    && go install github.com/air-verse/air@v1.52.3 \
+    && go install go.uber.org/mock/mockgen@v0.4.0
+
+RUN go mod tidy
+
+EXPOSE 8080 4000
+
+# CMD [ "dlv", "exec", "--listen=:4000", "--headless", "--log", "--accept-multiclient", "--api-version", "2", "-gcflags='all=-N -l'","./tmp/main", "/app/cmd/main.go" ]
+CMD ["air", "-c", ".air_debug.toml"]

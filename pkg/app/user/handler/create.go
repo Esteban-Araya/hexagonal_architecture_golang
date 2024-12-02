@@ -1,47 +1,56 @@
-package user
+package handler
 
 import (
+	"Project/internal/api"
+	appError "Project/internal/error"
+	"Project/pkg/app/user/domain"
 	"encoding/json"
-	"net/http"
+	"errors"
 	"log"
-	"Project/pkg/app/user/model"
+	"net/http"
+
 	"gopkg.in/validator.v2"
-	"Project/pkg/api"
 )
 
+func (h UserHandler) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
+	var user domain.CreateUserModel
 
+	// response := make(map[string]bool)
 
-func (h UserHandler) CreatUserHandler(w http.ResponseWriter, r *http.Request)  {
-	var user model.CreateUserModel
-
-	response := make(map[string]bool)
-	
 	body := r.Body
 	defer body.Close()
-	
+
 	err := json.NewDecoder(body).Decode(&user)
 
-	
-	
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
 	if err := validator.Validate(user); err != nil {
 		api.Error(err, http.StatusBadRequest).Send(w)
 		return
 	}
 
-	
-	if err != nil {	
-		log.Fatal(err.Error())
-	} 
-	succes, err := h.UserService.CreateUserService(user)
-	if err != nil {
-		api.Error(err, http.StatusInternalServerError).Send(w)
-	} 
-	
-	response["SUCCESS"]= succes
+	err = h.UserService.CreateUserService(user)
 
-	jsonString, err := json.Marshal(response)
 	if err != nil {
-		log.Fatal(err.Error())
-	} 
-	w.Write(jsonString)
+		app_error := appError.AppError{}
+		if errors.As(err, &app_error) {
+			switch app_error {
+			case domain.DiferentPasswordError:
+				api.Error(err, http.StatusBadRequest).Send(w)
+			case domain.EmailAlreadyExistError:
+				api.Error(err, http.StatusBadRequest).Send(w)
+			case domain.DatabaseError:
+				api.Error(domain.ServerError, http.StatusInternalServerError).Send(w)
+			default:
+				api.Error(domain.ServerError, http.StatusInternalServerError).Send(w)
+			}
+			return
+		}
+		api.Error(domain.ServerError, http.StatusInternalServerError).Send(w)
+		return
+	}
+
+	api.Succes(http.StatusCreated).Send(w)
 }

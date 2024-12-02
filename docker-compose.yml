@@ -9,6 +9,28 @@ services:
       - .:/app
     depends_on:
       - postgres
+  
+  debuger:
+    build: 
+      context: .
+      dockerfile: ./debug/Dockerfile.debug
+    ports:  
+      - 8088:8080
+      - 4000:4000
+    volumes:
+      - ./.vscode:/app/.vscode
+      - ./cmd:/app/cmd
+      - ./internal:/app/internal
+      - ./pkg:/app/pkg
+      - ./mocks:/app/mocks
+      - ./tmp:/app/tmp
+      - ./debug/.air_debug.toml:/app/.air_debug.toml
+      - ./go.mod:/app/go.mod
+      - ./go.sum:/app/go.sum
+      - ./.env:/app/.env
+    depends_on:
+      - postgres
+      - project
     
   postgres:
     image: postgres:15.3-alpine3.18

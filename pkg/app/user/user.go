@@ -1,20 +1,34 @@
 package user
 
 import (
-    "database/sql"
-    Storage "Project/pkg/app/user/storage/postgres"
-    Service "Project/pkg/app/user/service"
-    Handler "Project/pkg/app/user/handler"
-    "net/http"
+	"Project/internal/jwt"
+	JwtStorage "Project/internal/jwt/storage/postgres"
 
+	Handler "Project/pkg/app/user/handler"
+	Service "Project/pkg/app/user/service"
+	Storage "Project/pkg/app/user/storage/postgres"
+	"net/http"
+
+	"database/sql"
+
+	"github.com/go-chi/chi"
 )
 
-func UserRout(db *sql.DB){
-    userStorage := Storage.UserStorage{DB: db}
+func UserRout(db *sql.DB, rout *chi.Mux) {
+	jwtStorages := JwtStorage.JwtStorage{DB: db}
 
-    service := Service.UserService{userStorage}
+	jwtService := jwt.JwtService{JwtStorage: jwtStorages}
 
-    handler := Handler.UserHandler{service}
+	JwtMiddleware := jwt.JwtMiddleware{JwtService: jwtService}
 
-    http.HandleFunc("/user", handler.CreatUserHandler)
+	userStorage := Storage.UserStorage{DB: db}
+
+	userService := Service.UserService{UserStorage: userStorage}
+
+	userHandler := Handler.UserHandler{UserService: userService}
+
+	rout.Post("/user", userHandler.CreateUserHandler)
+	rout.Post("/user/login", userHandler.LoginUserHandler)
+	rout.Get("/user", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(userHandler.GetUser)))
+	rout.Put("/user", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(userHandler.UserUpdateHandler)))
 }

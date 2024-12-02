@@ -1,15 +1,17 @@
 package port
 
 import (
-	"Project/pkg/app/user/model"
+	"Project/pkg/app/user/domain"
 )
 
 type UserServiceInterface interface {
-	CreateUserService(u model.CreateUserModel) (succes bool, err error)
+	CreateUserService(u domain.CreateUserModel) (err error)
+	LoginUserService(u domain.LoginUserModel) (string, error)
+	UserUpdateNameService(u domain.UserUpdateName, id_user int) error
 }
 
 type UserStorageInterface interface {
-	Create(u model.CreateUserModel) (bool, error)
+	Create(u domain.CreateUserModel) error
+	GetUserByEmail(email string) (*domain.User, error)
+	UserUpdateName(u domain.UserUpdateName, id_user int) error
 }
-
-

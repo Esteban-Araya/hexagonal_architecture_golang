@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [    
+        {
+            "name": "Remote Docker App",
+            "type": "go",
+            "request": "attach",
+            "mode": "remote",            
+            "port": 4000,
+            "host": "127.0.0.1",
+            "remotePath": "/app",  // The path in the container where the code is
+            "showLog": true,
+            "showGlobalVariables":true
+        }
+    ]
+}

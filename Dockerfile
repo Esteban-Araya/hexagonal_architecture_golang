@@ -11,7 +11,10 @@ COPY . .
 # RUN go build -o websocket-server
 
 # Install air for live reloading
-RUN go install github.com/air-verse/air@latest
+RUN go install github.com/air-verse/air@v1.52.3 \
+    && go install go.uber.org/mock/mockgen@v0.4.0
+
+
 RUN go mod tidy
 # Expose port 8080 to the outside world
 EXPOSE 8080

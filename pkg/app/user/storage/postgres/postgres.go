@@ -1,9 +1,9 @@
-package storage
+package postgres
 
 import (
-    "database/sql"
+	"Project/pkg/app/user/storage"
 )
 
-type UserStorage struct{
-	DB *sql.DB
+type UserStorage struct {
+	DB storage.DBinterface
 }

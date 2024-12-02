@@ -3,6 +3,7 @@ package service
 import (
 	"Project/pkg/app/user/port"
 )
-type UserService struct{
-	Storage port.UserStorageInterface
+
+type UserService struct {
+	UserStorage port.UserStorageInterface
 }

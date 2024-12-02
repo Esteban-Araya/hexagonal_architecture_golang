@@ -5,7 +5,8 @@ tmp_dir = "tmp"
 [build]
   args_bin = []
   bin = "./tmp/main"
-  cmd = "go build -buildvcs=false -o ./tmp/main ./cmd/main.go"
+  pre_cmd=["go mod tidy"]
+  cmd = "go build -buildvcs=false -o ./tmp/main cmd/main.go"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []
@@ -30,6 +31,8 @@ tmp_dir = "tmp"
 [log]
   time = true
   main_only = false
+  level = "info"
+
 
 [misc]
   clean_on_exit = false
