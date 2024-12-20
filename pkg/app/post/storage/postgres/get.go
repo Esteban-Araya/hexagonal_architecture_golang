@@ -16,3 +16,22 @@ func (s PostStorage) GetPostById(id_post int) (*domain.GetPost, error) {
 	}
 	return &post, nil
 }
+
+func (s PostStorage) GetAllPost() (*[]domain.GetPost, error) {
+
+	rows, err := s.DB.Query("select id, user_id, title, content, created_at from post")
+	if err != nil {
+		return nil, err
+	}
+	var posts []domain.GetPost
+	for rows.Next() {
+		var post domain.GetPost
+		if err := rows.Scan(&post.ID, &post.UserID, &post.Title, &post.Content, &post.CreatedAt); err != nil {
+			return nil, err
+		}
+		posts = append(posts, post)
+	}
+
+	return &posts, nil
+
+}

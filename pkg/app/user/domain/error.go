@@ -7,6 +7,7 @@ const (
 	emailAlreadyExistErrorCode = "email_exist"
 	databaseErrorCode          = "database_error"
 	serverErrorCode            = "server_error"
+	emailOrPasswordIsWrongCode = "email_or_password_is_wrong"
 )
 
 const (
@@ -14,6 +15,7 @@ const (
 	emailAlreadyExistErrorMessage = "the email already exist"
 	databaseErrorMessage          = "the database had a error"
 	serverErrorMessage            = "server had a error"
+	emailOrPasswordIsWrongMessage = "email or password is wrong"
 )
 
 var DiferentPasswordError = appError.AppError{
@@ -34,4 +36,9 @@ var DatabaseError = appError.AppError{
 var ServerError = appError.AppError{
 	Code:    serverErrorCode,
 	Message: serverErrorMessage,
+}
+
+var EmailOrPasswordIsWrong = appError.AppError{
+	Code:    emailOrPasswordIsWrongCode,
+	Message: emailOrPasswordIsWrongMessage,
 }

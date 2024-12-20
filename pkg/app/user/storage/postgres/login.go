@@ -16,5 +16,8 @@ func (s UserStorage) GetUserByEmail(email string) (*domain.User, error) {
 			return nil, err
 		}
 	}
+	if user.ID == 0 {
+		return nil, domain.EmailOrPasswordIsWrong
+	}
 	return &user, nil
 }

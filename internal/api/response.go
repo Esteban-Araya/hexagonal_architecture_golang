@@ -27,5 +27,5 @@ func Succes(status int, obj ...interface{}) *ApiMessage {
 func (a ApiMessage) Send(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(a.Status)
-	return json.NewEncoder(w).Encode(a)
+	return json.NewEncoder(w).Encode(a.Message)
 }

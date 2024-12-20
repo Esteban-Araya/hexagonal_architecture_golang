@@ -30,4 +30,5 @@ func PostRout(db *sql.DB, rout *chi.Mux) {
 	rout.Post("/post", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(postHandler.CreatePostHandler)))
 	rout.Put("/post", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(postHandler.PostUpdateHandler)))
 	rout.Get("/post/{id}", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(postHandler.GetPostByIdHandler)))
+	rout.Get("/post", http.HandlerFunc(postHandler.GetAllPostHandler))
 }

@@ -6,8 +6,8 @@ import (
 
 type CreatePostModel struct {
 	UserID    int       `json:"-" `
-	Title     string    `json:"title" validate:"min=4, max=20"`
-	Content   string    `json:"content"  validate:"min=10, max=120"`
+	Title     string    `json:"title" validate:"min=4, max=80"`
+	Content   string    `json:"content"  validate:"min=10, max=1000"`
 	CreatedAt time.Time `json:"-"`
 }
 

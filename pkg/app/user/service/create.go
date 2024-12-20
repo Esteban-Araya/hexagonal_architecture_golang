@@ -9,7 +9,7 @@ import (
 
 func (s UserService) CreateUserService(u domain.CreateUserModel) (err error) {
 
-	if u.Password != u.PasswordVerified {
+	if u.Password != u.PasswordValid {
 		return domain.DiferentPasswordError
 	}
 	password_encrypted, err := encryption.Encrypt([]byte(u.Password))

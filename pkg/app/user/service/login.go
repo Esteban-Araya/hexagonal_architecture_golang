@@ -8,9 +8,9 @@ import (
 
 func (s UserService) LoginUserService(u domain.LoginUserModel) (string, error) {
 
-	// encryption.Decrypt()
 	user, err := s.UserStorage.GetUserByEmail(u.Email)
 	if err != nil {
+
 		return "", err
 	}
 
@@ -20,8 +20,9 @@ func (s UserService) LoginUserService(u domain.LoginUserModel) (string, error) {
 	}
 
 	if string(decrypted_password) != u.Password {
-		return "", err
+		return "", domain.EmailOrPasswordIsWrong
 	}
+
 	token, err := jwt.GenerateToken(user)
 
 	if err != nil {

@@ -5,11 +5,11 @@ import (
 )
 
 type CreateUserModel struct {
-	Username         string    `json:"username" validate:"min=4"`
-	Email            string    `json:"email" validate:"regexp=^[a-z0-9_]+[@]+[a-z]+[.]+[a-z]+$"`
-	Password         string    `json:"password" validate:"min=6"`
-	PasswordVerified string    `json:"password_valid" validate:"min=6"`
-	CreatedAt        time.Time `json:"-"`
+	Username      string    `json:"username" validate:"min=4"`
+	Email         string    `json:"email" validate:"regexp=^[a-z0-9_]+[@]+[a-z]+[.]+[a-z]+$"`
+	Password      string    `json:"password" validate:"min=5"`
+	PasswordValid string    `json:"password_valid" validate:"min=5"`
+	CreatedAt     time.Time `json:"-"`
 }
 
 type LoginUserModel struct {
