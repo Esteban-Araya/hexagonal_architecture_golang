@@ -13,5 +13,5 @@ func (s PostHandler) GetAllPostHandler(w http.ResponseWriter, r *http.Request) {
 		api.Error(err, http.StatusInternalServerError)
 	}
 
-	api.Succes(http.StatusOK, post).Send(w)
+	api.Success(http.StatusOK, post).Send(w)
 }

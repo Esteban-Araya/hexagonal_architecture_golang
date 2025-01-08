@@ -20,7 +20,7 @@ package handler_test
 // 		assertion func(w *httptest.ResponseRecorder, subTest *testing.T)
 // 	}{
 // 		{
-// 			Name: "Succes",
+// 			Name: "Success",
 // 			setUp: func(MockUserService *mocks.MockUserServiceInterface) (*httptest.ResponseRecorder, *http.Request) {
 
 // 				reqBody := `{

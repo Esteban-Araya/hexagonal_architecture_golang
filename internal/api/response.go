@@ -10,7 +10,7 @@ type ApiMessage struct {
 	Message interface{} `json:"message,omitempty"`
 }
 
-func Succes(status int, obj ...interface{}) *ApiMessage {
+func Success(status int, obj ...interface{}) *ApiMessage {
 
 	if obj == nil {
 		return &ApiMessage{

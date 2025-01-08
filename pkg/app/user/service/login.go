@@ -4,30 +4,43 @@ import (
 	"Project/internal/encryption"
 	"Project/internal/jwt"
 	"Project/pkg/app/user/domain"
-)
+)	
 
-func (s UserService) LoginUserService(u domain.LoginUserModel) (string, error) {
+func (s UserService) LoginUserService(u domain.LoginUserModel) (*jwt.RefreshAndAccessTokens, error) {
 
 	user, err := s.UserStorage.GetUserByEmail(u.Email)
 	if err != nil {
 
-		return "", err
+		return nil, err
 	}
 
 	decrypted_password, err := encryption.Decrypt(user.Password)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	if string(decrypted_password) != u.Password {
-		return "", domain.EmailOrPasswordIsWrong
+		return nil, domain.EmailOrPasswordIsWrong
 	}
 
-	token, err := jwt.GenerateToken(user)
+	access, err := jwt.GenerateAccessToken(user)
+	if err != nil {
+		return nil, err
+	}
+
+	refresh, err := jwt.GenerateRefreshToken(user)
 
 	if err != nil {
-		return "", err
+		return nil, err
+	}
+	tokens := jwt.RefreshAndAccessTokens{
+		Refresh: refresh,
+		Access: access,
 	}
 
-	return token, nil
+	if err != nil {
+		return nil, err
+	}
+
+	return &tokens, nil
 }

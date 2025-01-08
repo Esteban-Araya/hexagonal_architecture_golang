@@ -21,17 +21,16 @@ func (h UserHandler) LoginUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := validator.Validate(user); err != nil {
-		log.Println(http.StatusBadRequest)
 		api.Error(err, http.StatusBadRequest).Send(w)
 		return
 	}
 	token, err := h.UserService.LoginUserService(user)
-
 	if err != nil {
+		log.Println(err)
 
 		api.Error(err, http.StatusInternalServerError).Send(w)
 		return
 	}
 
-	api.Succes(http.StatusOK, token).Send(w)
+	api.Success(http.StatusOK, token).Send(w)
 }

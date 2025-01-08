@@ -53,5 +53,5 @@ func (h UserHandler) UserUpdateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	api.Succes(http.StatusCreated).Send(w)
+	api.Success(http.StatusCreated).Send(w)
 }

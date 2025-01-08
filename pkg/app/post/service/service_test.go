@@ -19,7 +19,7 @@ package service_test
 // 		assertion func(err error, subTest *testing.T)
 // 	}{
 // 		{
-// 			Name: "Succes",
+// 			Name: "Success",
 // 			setUp: func(MockUserStorage *mocks.MockUserStorageInterface) domain.CreateUserModel {
 // 				u := domain.CreateUserModel{
 // 					Email:            "test",

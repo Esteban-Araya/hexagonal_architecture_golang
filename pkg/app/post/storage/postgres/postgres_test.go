@@ -20,7 +20,7 @@ package postgres_test
 // 		assertion func(err error, subTest *testing.T)
 // 	}{
 // 		{
-// 			Name: "Succes",
+// 			Name: "Success",
 // 			setUp: func(MockUserStorage *mocks.MockDBinterface) domain.CreateUserModel {
 // 				u := domain.CreateUserModel{
 // 					Email:            "test",

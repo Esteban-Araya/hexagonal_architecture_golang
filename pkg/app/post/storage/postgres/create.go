@@ -9,8 +9,8 @@ import (
 
 func (s PostStorage) Create(p domain.CreatePostModel) error {
 
-	_, err := s.DB.Exec("insert into post (user_id, title, content, created_at) values ($1,$2,$3,$4)",
-		p.UserID, p.Title, p.Content, p.CreatedAt)
+	_, err := s.DB.Exec("insert into post (user_id, title, content, latitude, longitude, created_at) values ($1,$2,$3,$4,$5,$6)",
+		p.UserID, p.Title, p.Content, p.Latitude, p.Longitude, p.CreatedAt)
 
 	if err != nil {
 		// code := err.(*pq.Error).Code

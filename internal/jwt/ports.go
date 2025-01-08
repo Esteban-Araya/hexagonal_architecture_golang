@@ -7,7 +7,8 @@ import (
 )
 
 type JwtServiceInterface interface {
-	ValidateToken(value string) (jwt_lib.MapClaims, error)
+	ValidateRefreshToken(value string) (jwt_lib.MapClaims, error)
+	ValidateAccessToken(value string) (jwt_lib.MapClaims, error)	
 	IsTokenExpire(time_token float64) error
 	GetUser(id float64) (*userDomain.User, error)
 }

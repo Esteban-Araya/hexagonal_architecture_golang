@@ -11,6 +11,8 @@ CREATE TABLE post(
     user_id INTEGER REFERENCES users(id),
     title VARCHAR(100) NOT NULL,
     content TEXT NOT NULL,
+    latitude NUMERIC(9, 6),   
+    longitude NUMERIC(9, 6),  
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

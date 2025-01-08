@@ -29,6 +29,6 @@ func UserRout(db *sql.DB, rout *chi.Mux) {
 
 	rout.Post("/user", userHandler.CreateUserHandler)
 	rout.Post("/user/login", userHandler.LoginUserHandler)
-	rout.Get("/user", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(userHandler.GetUser)))
-	rout.Put("/user", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(userHandler.UserUpdateHandler)))
+	rout.Get("/user", JwtMiddleware.MiddlewareIsAccessTokenValid(http.HandlerFunc(userHandler.GetUser)))
+	rout.Put("/user", JwtMiddleware.MiddlewareIsAccessTokenValid(http.HandlerFunc(userHandler.UserUpdateHandler)))
 }

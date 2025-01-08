@@ -27,8 +27,8 @@ func PostRout(db *sql.DB, rout *chi.Mux) {
 
 	postHandler := Handler.PostHandler{postService}
 
-	rout.Post("/post", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(postHandler.CreatePostHandler)))
-	rout.Put("/post", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(postHandler.PostUpdateHandler)))
-	rout.Get("/post/{id}", JwtMiddleware.MiddlewareIsJwtValid(http.HandlerFunc(postHandler.GetPostByIdHandler)))
+	rout.Post("/post", JwtMiddleware.MiddlewareIsAccessTokenValid(http.HandlerFunc(postHandler.CreatePostHandler)))
+	rout.Put("/post", JwtMiddleware.MiddlewareIsAccessTokenValid(http.HandlerFunc(postHandler.PostUpdateHandler)))
+	rout.Get("/post/{id}", JwtMiddleware.MiddlewareIsAccessTokenValid(http.HandlerFunc(postHandler.GetPostByIdHandler)))
 	rout.Get("/post", http.HandlerFunc(postHandler.GetAllPostHandler))
 }

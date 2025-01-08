@@ -11,7 +11,7 @@ import (
 )
 
 func getIP() net.IP {
-	conn, err := net.Dial("udp", "8.8.8.8:80")
+	conn, err := net.Dial("tcp", "8.8.8.8:80")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -23,7 +23,7 @@ func getIP() net.IP {
 
 func InitDB() (DB *sql.DB, err error) {
 
-	server := "192.168.0.17"
+	server := "192.168.1.47"
 	if server == "" {
 		server = getIP().String()
 	}

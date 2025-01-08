@@ -3,6 +3,7 @@ package rout
 import (
 	"Project/pkg/app/post"
 	"Project/pkg/app/user"
+	"Project/internal/jwt"
 	"database/sql"
 	"net/http"
 
@@ -10,7 +11,7 @@ import (
 )
 
 func StartListener(s *http.Server, db *sql.DB, r *chi.Mux) error {
-
+	jwt.JwtRout(db, r)
 	user.UserRout(db, r)
 	post.PostRout(db, r)
 	return s.ListenAndServe()
